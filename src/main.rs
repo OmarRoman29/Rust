@@ -1,3 +1,4 @@
+mod enums;
 mod estructuras_de_control;
 mod leer_de_consola;
 mod ownership;
@@ -8,9 +9,10 @@ fn main() {
     //En este orden se fueron realizando los archivos y es orden
     //de las "clases"
 
-    tipos_datos::main();
+    // tipos_datos::main();
     // leer_de_consola::main();
     // estructuras_de_control::main();
     // ownership::main();
     // structs::main();
+    enums::main();
 }
