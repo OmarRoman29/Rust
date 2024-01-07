@@ -8,9 +8,9 @@ fn main() {
     //En este orden se fueron realizando los archivos y es orden
     //de las "clases"
 
-    // tipos_datos::main();
+    tipos_datos::main();
     // leer_de_consola::main();
     // estructuras_de_control::main();
     // ownership::main();
-    structs::main();
+    // structs::main();
 }

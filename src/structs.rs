@@ -18,7 +18,7 @@ struct Usuario {
 // Crear estructuras usando tuplas sin nombre para sus miembros
 struct RgbColor(i32, i32, i32);
 
-// Métodos: En POO un método es una función asociada a un objeto, en
+// Métodos: En POO un método es una función propia de una clase, en
 // Rust las estructuras también pueden contener métodos
 
 // Definimos propiedades
@@ -29,26 +29,28 @@ struct AnimalVolador {
 
 // Definimos métodos
 impl AnimalVolador {
-    // Crear un método constructor, En lugar de AnimalVolador se puede
-    // usar la palabra reservada Self (con mayuscula) para referrir al
-    // mismo tipo de estructura
+    /* Crear un método constructor, En lugar de AnimalVolador se puede
+     * usar la palabra reservada Self (con mayuscula) para referrir al
+     * mismo tipo de estructura. Toda función donde no se incluya como
+     * argumento &self es llamada función asociada
+     */
     pub fn new(nombre: String, edad: u8) -> AnimalVolador {
         AnimalVolador { nombre, edad }
     }
 
-    // Si vamos a usar dentro de la función los valores de los miembros
-    // de nuestra variable usamos la referencia &self para poder acceder
-    // a estos valores
-    pub fn volar(&self, velocidad: f32){
+    /* Si vamos a usar dentro de la función los valores de los miembros
+     * de nuestra variable usamos la referencia &self para poder acceder
+     * a estos valores. self también debe ser mutable o inmutable según
+     * necesites
+     */
+    pub fn volar(&self, velocidad: f32) {
         println!("{} vuela a {} km/h", self.nombre, velocidad);
     }
-
-    
 }
 
 pub fn main() {
     // Una forma de inicializarlo es:
-    let usuario1 = Usuario {
+    let _usuario1 = Usuario {
         active: true,
         username: String::from("someusername123"),
         age: 18,
@@ -81,7 +83,10 @@ pub fn main() {
         color_negro.0, color_negro.1, color_negro.2
     );
 
-    // Creamos un nuevo animal volador usando el constructor
+    /* Creamos un nuevo animal volador usando el constructor
+     * para llamar a una función asociada, la cual no necesita una
+     * instancia de una estructura para llamarse se usa Tipo::función()
+     */
     let pajaro = AnimalVolador::new(String::from("Murcielago"), 1);
 
     //llamamos a su método

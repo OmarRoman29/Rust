@@ -83,4 +83,25 @@ pub fn main() {
 
     // Tambien podemos hacer un str de un String
     let _str = _string;
+
+    // DATOS COMPUESTOS
+    
+    /* Tupla: Una tupla es una forma general de agrupar
+     * varios valores de diferente tipo, las tuplas tienen
+     * un tamaño definido, una vez se establece no puede
+     * modificarse
+     */
+    let tupla: (i32, f32, &str) = (500, 3.14, "Hola");
+    println!("{} {} {}", tupla.0, tupla.1, tupla.2);
+
+    let (x, y, z) = tupla;
+    println!("{x} {y} {z}");
+
+    /* Array: Es la otra forma de tener una agrupación 
+     * de datos del mismo tipo, también tienen un tamaño
+     * fijo. Se establece su tipo y largo desde su 
+     * declaración como : [tipo; tamaño]
+     */
+    let array: [u8; 5] = [1, 2, 3, 4, 5];
+    println!("{}", array[0]);
 }
