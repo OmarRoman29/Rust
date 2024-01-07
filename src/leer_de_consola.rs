@@ -1,4 +1,13 @@
-use std::io;
+//use std::io; por defecto
+use std::io::{self, Write}; // Extra para la limpieza del buffer
+
+// Print no agrega el salto de linea por defecto pero posiblemente
+// para que se imprima de inmediato lo que se quiere mostrar se
+// deba limpiar el buffer
+fn print(input: String){
+    print!("{input}");
+    std::io::stdout().flush().expect("Error limpiando el buffer (?)");
+}
 
 pub fn main() {
     // Leer dato por consola
@@ -27,4 +36,10 @@ pub fn main() {
     let cadena = "   Holaaks djsd  ";
     // El método trim elimina espacios al inicio y al final
     println!("{}", cadena.trim());
+
+    let mut input = String::new();
+    print("Ingresa un numero: ".to_string());
+    io::stdin().read_line(&mut input).expect("Error no se pudo leer dato");
+    print("Dato ingresado: ".to_string());
+    print(input);
 }
