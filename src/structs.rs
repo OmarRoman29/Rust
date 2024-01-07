@@ -2,11 +2,21 @@
  * agrupar distintos tipos de datos primitvos bajo un nombre con
  * el fin de representar una entidad. En rust además de tener estas
  * variables que pueden almacenar datos pueden incluirse métodos
- */
+ *
 
-/* Definición de una estructura llamada Usuario. dentro de los
+ * Definición de una estructura llamada Usuario. dentro de los
  * dentro de las llaves se establecen los miembros que tendrá y
  * su tipo además del nombre con el que haremos referencia
+ *
+ * Cuando se hace una estructura tenemos un problema al usar &str.
+ * Este tipo de dato puede darse el caso en el que se libere la 
+ * memoria de la cadena antes de que se libere la memoria de 
+ * la estructura completa, por lo que en determinado caso podríamos
+ * acceder a un espacio de memoria en el cual no exista dado, que
+ * es algo que no deseamos. Por lo que se pueden hacer dos cosas.
+ * Uno usar String en su lugar, o configurar un "time life". Algo
+ * que se hablará más adelante (y que al momento de escribir esto
+ * aún no entiendo)
  */
 
 struct Usuario {
