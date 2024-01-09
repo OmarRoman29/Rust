@@ -60,6 +60,9 @@ pub fn main() {
      */ 
     let _usr1_dir = DirIpV2::V4(192, 168, 1, 0);
     let _usr2_dir = DirIpV2::V6(String::from("::5"));
+
+    // También puede haber enums que tengan métodos
+    _usr2_dir.ping();
 }
 
 fn route(_tipo_ip: TipoDeIp) {
@@ -79,4 +82,10 @@ enum DirIpV1{
 enum DirIpV2{
     V4(u8, u8, u8, u8),
     V6(String),
+}
+
+impl DirIpV2 {
+    fn ping(&self){
+        println!("haciendo ping");
+    }
 }
