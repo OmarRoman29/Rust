@@ -99,4 +99,14 @@ pub fn main() {
         "Hola" => true,
         other => false,
     };
+
+    // Estructura de control if let para hacer match entre una
+    // y dos opciones(?)
+    let data = Some(3u8);
+    if let Some(data2) = data{
+        println!("A {}", data2)
+    }
+    else{
+        println!("B")
+    }
 }

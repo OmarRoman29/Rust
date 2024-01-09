@@ -1,11 +1,13 @@
 mod enums;
 mod estructuras_de_control;
 mod leer_de_consola;
+mod match_cf;
+mod modulos;
 mod option;
 mod ownership;
 mod structs;
 mod tipos_datos;
-mod match_cf;
+mod operaciones;
 
 fn main() {
     //En este orden se fueron realizando los archivos y es orden
@@ -19,4 +21,5 @@ fn main() {
     // enums::main();
     // option::main();
     match_cf::main();
+    // aquí va lo de modulos .rs
 }
