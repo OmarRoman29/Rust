@@ -8,6 +8,7 @@ mod ownership;
 mod structs;
 mod tipos_datos;
 mod operaciones;
+mod collections;
 
 fn main() {
     //En este orden se fueron realizando los archivos y es orden
@@ -20,6 +21,7 @@ fn main() {
     // structs::main();
     // enums::main();
     // option::main();
-    match_cf::main();
-    // aquí va lo de modulos .rs
+    // match_cf::main();
+    // aquí va lo de modulos.rs
+    collections::main();
 }

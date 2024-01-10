@@ -1,4 +1,7 @@
 // debe ser todo publico para poder usarse
+//se agrega esto antes del struct para poder usar un print
+//formateado. Es un trait, se abordará más adelante
+#[derive(Debug)]
 pub struct Vector2 {
     pub x: f32,
     pub y: f32,

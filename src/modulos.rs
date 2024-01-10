@@ -4,6 +4,11 @@
  *
  * Por defecto todos los módulos y funciones son privadas, por
  * lo que hay que hacerlas públicas
+ *
+ * Packages: A Cargo feature that lets you build, test, and share crates
+ * Crates: A tree of modules that produces a library or executable
+ * Modules and use: Let you control the organization, scope, and privacy of paths
+ * Paths: A way of naming an item, such as a struct, function, or module
  */
 
 pub mod modulo1 {
@@ -42,6 +47,7 @@ use modulo1::otro_modulo::_otrafn1;
 
 use crate::operaciones;
 use crate::operaciones::vectores::Vector2;
+use operaciones::vectores::suma as suma_de_vectores;
 
 pub fn hacer_algo2() {
     otro_modulo::_otrafn1();
@@ -81,4 +87,9 @@ fn coso3() {
     let suma_vect = operaciones::vectores::suma(v1, v2);
 
     println!("Suma: {}, {}", suma_vect.x, suma_vect.y);
+
+    let v1 = Vector2::new(1.0, 2.0);
+    let v2 = Vector2::new(2.0, 0.0);
+    let suma_vect = suma_de_vectores(v1, v2);
+    println!("Suma: {:?}", suma_vect);
 }
