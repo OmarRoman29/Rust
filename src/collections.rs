@@ -77,6 +77,7 @@ pub fn main() {
         i += 1;
     }
 
+    // Podemos almacenar varios datos en un vector si usamos un enum
     println!("\nDiferentes tipos de dato en un vector");
     let _vector: Vec<VariosTipos> = Vec::new();
     let _vector = vec![
@@ -93,8 +94,25 @@ pub fn main() {
     for elemento in &_vector {
         elemento.obtener_datos();
     }
+    // Al igual que cualquier otra variable, cuando deja de usarse se
+    // libera
 
-    // Podemos almacenar varios datos en un vector si usamos un enum
+    // Por si debiera usar un """array""" bidimensional dinámico por alguna wea (seguramente deba
+    // hacerse refactorización)
+    let mut votos: Vec<Vec<usize>> = Vec::new();
+    let tope = 10;
+
+    // Inicializar el arreglo bidimensional con valores predeterminados (por ejemplo, ceros)
+    for _ in 0..tope {
+        let fila = vec![0; tope];
+        votos.push(fila);
+    }
+
+    for municipio in &votos {
+        for _candidato in municipio {
+            //aquí se accede al dato dentro del vector que está dentro del vector xd
+        }
+    }
 }
 
 enum VariosTipos {

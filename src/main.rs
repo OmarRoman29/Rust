@@ -23,5 +23,5 @@ fn main() {
     // option::main();
     // match_cf::main();
     // aquí va lo de modulos.rs
-    collections::main();
+    // collections::main();
 }
