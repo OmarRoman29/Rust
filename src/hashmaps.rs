@@ -134,4 +134,18 @@ pub fn main() {
     }
 
     println!("{:?}", map);
+
+    /* Por defecto, HashMap utiliza una función de hashing llamada SipHash
+     * que puede proporcionar resistencia a ataques de Denegación de Servicio
+     * (DoS) que involucran tablas de hash1. Este no es el algoritmo de
+     * hashing más rápido disponible, pero el compromiso entre mejor
+     * seguridad y la disminución en el rendimiento vale la pena. Si perfilas
+     * tu código y encuentras que la función de hash predeterminada es 
+     * demasiado lenta para tus propósitos, puedes cambiar a otra función
+     * especificando un hasher diferente. Un hasher es un tipo que implementa
+     * el trait BuildHasher. Hablaremos sobre traits y cómo implementarlos en
+     * el Capítulo 10. No necesariamente debes implementar tu propio hasher
+     * desde cero; crates.io tiene bibliotecas compartidas por otros usuarios
+     * de Rust que proporcionan hashers que implementan muchos algoritmos de hashing 
+     */ 
 }
