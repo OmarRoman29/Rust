@@ -4,5 +4,10 @@ version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+# Supongo que unicamente tendrá efecto al compilar como cargo build --release
+# evitar el unwinding en caso de un panic:
+[profile.release] 
+panic = 'abort'
 
 [dependencies]
+

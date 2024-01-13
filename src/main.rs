@@ -10,6 +10,7 @@ mod option;
 mod ownership;
 mod structs;
 mod tipos_datos;
+mod control_de_errores;
 
 fn main() {
     //En este orden se fueron realizando los archivos y es orden
@@ -26,5 +27,6 @@ fn main() {
     // aquí va lo de modulos.rs
     // collections::main();
     // Aquí iría la explicación detallada de las Strings
-    hashmaps::main();
+    // hashmaps::main();
+    control_de_errores::main();
 }
