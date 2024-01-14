@@ -73,7 +73,7 @@ fn _func_panic2() {
  * con la flag --release
  */
 
-use core::panicking::panic;
+// use core::panicking::panic;
 /* Errores recuperables con Result
  * La mayoría de los errores no necesitan que el programe finalice en su
  * totalidad. Muchas veces cuando una función falla, es por una razón que
