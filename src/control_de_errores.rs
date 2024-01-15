@@ -141,7 +141,8 @@ fn _crear_un_archivo2() {
     let archivo = match archivo {
         // Obtenemos el T en Ok<T>
         Ok(archivo) => archivo,
-        // Manejamos el error obteniendo el tipo
+        // Manejamos el error obteniendo el tipo con el método kind
+        // dado en la librería estandar
         Err(error) => match error.kind() {
             // Hacemos match
             ErrorKind::NotFound => match File::create("hola.txt") {
@@ -156,8 +157,77 @@ fn _crear_un_archivo2() {
     };
 }
 
+/* Existe una variante enum io::NotFound que es dada por la librería
+ * estandar que indicaría que el archivo que buscamos abrir no fue
+ * encontrado. Al igual que con los otros enum.Al error ser un enum
+ * podemos manejarlo con tipo de estructura de control
+ */
+fn _crear_un_archivo3() {
+    let greeting_file = File::open("hello.txt").unwrap_or_else(|error| {
+        if error.kind() == ErrorKind::NotFound {
+            File::create("hello.txt").unwrap_or_else(|error| {
+                panic!("Problem creating the file: {:?}", error);
+            })
+        } else {
+            panic!("Problem opening the file: {:?}", error);
+        }
+    });
+}
+
+/* También existen métodos que permiten manejar errores sin
+ * necesidad de utilizar un match que el enum Result<T,E>
+ * nos provee.
+ *
+ * unwrap(): Si el valor de Result es Ok, unwrap retornará el valor
+ * contenido en el Ok, si este es Err unwrap va a llamar a a la
+ * macro panic!
+ */
+fn _crear_un_archivo4() {
+    let _greeting_file = File::open("hello.txt").unwrap();
+}
+
+/* Usamos el método expect en la misma forma que unwrap con la
+ * diferencia que nosotros establecemos un mensaje de error
+ * diferente al habitual
+ */
+
+fn _crear_un_archivo5() {
+    let greeting_file =
+        File::open("hello.txt").expect("hello.txt should be included in this project");
+}
+
+/* Propagando errores
+ * Cuando la implementación de una función llama a algo que pueda fallar. En lugar
+ * de manejar directamente el error en la función misma, puedes retornar un error
+ * que retorna tu llamado. [Aquí existe más descipción en el libro pero no entendí
+ * y no tengo wifi para consultar una traducción]
+ */
+
+// use std::fs::File;
+use std::io::{self, Read};
+
+// Esta función puede refactorizarse pero se deja así por fines de la enseñanza
+fn _read_username_from_file() -> Result<String, io::Error> {
+    let username_file_result = File::open("hello.txt");
+
+    let mut username_file = match username_file_result {
+        Ok(file) => file,
+        Err(e) => return Err(e),
+    };
+
+    let mut username = String::new();
+
+    match username_file.read_to_string(&mut username) {
+        Ok(_) => Ok(username),
+        Err(e) => Err(e),
+    }
+}
+
 pub fn main() {
     // _func_panic();
     // _func_panic2();
-    _crear_un_archivo();
+    // _crear_un_archivo();
+    // _crear_un_archivo2();
+    // _crear_un_archivo3();
+    // _crear_un_archivo4()
 }
