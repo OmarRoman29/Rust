@@ -163,7 +163,7 @@ fn _crear_un_archivo2() {
  * podemos manejarlo con tipo de estructura de control
  */
 fn _crear_un_archivo3() {
-    let _greeting_file = File::open("hello.txt").unwrap_or_else(|error| {
+    let greeting_file = File::open("hello.txt").unwrap_or_else(|error| {
         if error.kind() == ErrorKind::NotFound {
             File::create("hello.txt").unwrap_or_else(|error| {
                 panic!("Problem creating the file: {:?}", error);
@@ -194,36 +194,6 @@ fn _crear_un_archivo4() {
 fn _crear_un_archivo5() {
     let greeting_file =
         File::open("hello.txt").expect("hello.txt should be included in this project");
-}
-
-/* Existe otro método llamado unwrap_or_else() este al igual que
- * unwrap y expect manejan el contenido de un Option<T> y proporciona
- * una forma de manejar el caso en caso que el resultado sea Err o None
- *
- * Además con este se agregan los "closures", cláusulas de cierre, funciones
- * anónimas o funciones lambda. En programacion un closure es un bloque de
- * código que puede ser almacenado en una variable o pasarse como argumento
- * a una función. "o más distintivo de los closures es su capacidad para
- * capturar y recordar el entorno en el que fueron creados, lo que les permite
- * acceder a variables y valores desde ese entorno incluso después de que la
- * función que los creó haya terminado de ejecutarse." La verdad no entiendo
- * cómo funciona del todo, porque reciben argumentos y luego parecen comportarse
- * como apuntadores a funciones en C. Pero se tocan los cloures a detalle en
- * el siguiente cap después del manejo de errores. Por ahora nos quedamos con
- * que permiten pasar un bloque de código como argumento y en caso de
- * unwrap_or_else nos permiten manejar el error e incluso retornar un valor
- */
-fn _unwrap_or_else_prueba() {
-    let maybe_value: Option<i32> = None;
-
-    // unwrap_or_else se usa para proporcionar un valor predeterminado en caso de None
-    let result = maybe_value.unwrap_or_else(|| {
-        println!("No hay valor, proporcionando uno predeterminado");
-        32
-    });
-
-    println!("Resultado: {}", result);
-    println!("Maybe_Value: {:?}", maybe_value);
 }
 
 /* Propagando errores
@@ -303,14 +273,14 @@ fn read_username_from_file() -> Result<String, io::Error> {
 // Definición del tipo de error personalizado
 #[derive(Debug)]
 struct OurError {
-    _message: String,
+    message: String,
 }
 
 // Implementación de From para convertir io::Error a OurError
 impl From<io::Error> for OurError {
-    fn from(_error: io::Error) -> Self {
+    fn from(error: io::Error) -> Self {
         OurError {
-            _message: format!("Ocurrió un error personalizado"),
+            message: format!("Ocurrió un error personalizado"),
         }
     }
 }
@@ -324,91 +294,6 @@ fn _read_username_from_file2() -> Result<String, OurError> {
     Ok(username)
 }
 
-/* Ten en cuenta que puedes usar el operador ? en un Result en una función
- * que devuelve Result, y puedes usar el operador ? en un Option en una
- * función que devuelve Option, pero no puedes mezclar y combinar. El
- * operador ? no convertirá automáticamente un Result en un Option o
- * viceversa; en esos casos, puedes utilizar métodos como el método ok en
- * Result o el método ok_or en Option para realizar la conversión
- * explícitamente.
- *
- * Hasta ahora, todas las funciones principales que hemos utilizado devuelven
- * (). La función principal es especial porque es el punto de entrada y salida
- * de los programas ejecutables, y hay restricciones sobre qué tipo de retorno
- * puede tener para que los programas se comporten como se espera.
- *
- *
- * Afortunadamente, la función principal también puede devolver un Result<(), E>.
- * El Listado 9-12 tiene el código del Listado 9-10, pero hemos cambiado el tipo
- * de retorno de la función principal a Result<(), Box<dyn Error>> y hemos agregado
- * un valor de retorno Ok(()) al final. Este código ahora se compilará:
- */
-
-use std::error::Error;
-//use std::fs::File;
-
-fn _funcion() -> Result<(), Box<dyn Error>> {
-    let _greeting_file = File::open("hello.txt")?;
-
-    Ok(())
-}
-
-/* Listado 9-12: Cambiar la función principal para devolver Result<(), E> permite el uso
- * del operador ? en valores de Result
- *
- * El tipo Box<dyn Error> es un objeto de trait, del cual hablaremos en la sección "Uso
- * de objetos de trait que permiten valores de diferentes tipos" en el Capítulo 17. Por
- * ahora, puedes entender Box<dyn Error> como "cualquier tipo de error". El uso de ? en
- * un valor de Result en una función principal con el tipo de error Box<dyn Error> está
- * permitido, porque permite que cualquier valor Err se devuelva temprano. Aunque el
- * cuerpo de esta función principal solo devolverá errores del tipo std::io::Error, al
- * especificar Box<dyn Error>, esta firma seguirá siendo correcta incluso si se agrega
- * más código que devuelve otros errores al cuerpo de la función principal.
- *
- *
- * Cuando una función principal devuelve un Result<(), E>, el ejecutable saldrá con un
- * valor de 0 si la función principal devuelve Ok(()) y saldrá con un valor distinto de
- * cero si la función principal devuelve un valor Err. Los ejecutables escritos en C
- * devuelven enteros cuando salen: los programas que salen con éxito devuelven el entero
- * 0, y los programas que tienen errores devuelven algún entero distinto de 0. Rust
- * también devuelve enteros en ejecutables para ser compatible con esta convención.
- *
- * La función principal puede devolver cualquier tipo que implemente el trait
- * std::process::Termination, que contiene una función report que devuelve un ExitCode.
- * Consulta la documentación de la biblioteca estándar para obtener más información sobre
- * la implementación del trait Termination para tus propios tipos.
- *
- * Ahora que hemos discutido los detalles de llamar a panic! o devolver Result, volvamos
- * al tema de cómo decidir cuál es apropiado usar en qué casos.
- */
-
-/* Esta función si bien se ve bastante confusa y pa los más expertos en Rust bastante
- * Ineficiente, está hecha con el fin de explicar la función siguiente que es la que
- * viene en el ejemplo del libro. Es esta función tomamos una cadena como argumento,
- * le aplicamos el método .lines() que según cuantos saltos de linea encuentre los
- * convierte en un iterable, por ejemplo de tener "hola\ncomo\nestas" pasas a tener
- * {"hola", "como", "estas"}. El método .next() hace que avancemos una elemento en
- * un iterable, por lo que nos colocamos en el primer elemento con esto, pues parece
- * ser que con unicamente lines() no nos colocamos en la primer posición, pero debemos
- * manejar el Option en caso de que no existan cadenas que lines pueda obtener. De ahí
- * sobre nuestro primer elemento usamos el método chars() que devuelve un iterador de
- * caracteres que componen una cadena y pues con last() nos colocamos en el último elemento,
- * sin embargo puesto que last ya maneja el si se le pasa como argumento un None retornará
- * también un None para este caso permitiendo que nosotros manejemos este error como
- * necesitemos, pero en este caso unicamente devolveremos el caracter o None según sea el
- * caso. Ahora podemos omitir este if let haciendo uso del operador ?
- */
-fn _last_char_of_first_line(text: &str) -> Option<char> {
-    if let Some(first_line) = text.lines().next() {
-        return first_line.chars().last();
-    }
-    None
-}
-
-fn _last_char_of_first_line2(text: &str) -> Option<char> {
-    text.lines().next()?.chars().last()
-}
-
 pub fn main() {
     // _func_panic();
     // _func_panic2();
@@ -417,11 +302,5 @@ pub fn main() {
     // _crear_un_archivo3();
     // _crear_un_archivo4()
     // _crear_un_archivo5();
-    // _unwrap_or_else_prueba();
-    // _read_username_from_file();
-    // read_username_from_file();
-    // _read_username_from_file2();
-    // _funcion();
-    // _last_char_of_first_line("text").unwrap();
-    // _last_char_of_first_line2("").unwrap();
+
 }
