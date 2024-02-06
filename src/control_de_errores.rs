@@ -259,7 +259,7 @@ fn _read_username_from_file() -> Result<String, io::Error> {
 //use std::fs::File;
 //use std::io::{self, Read};
 
-fn read_username_from_file() -> Result<String, io::Error> {
+fn _read_username_from_file2() -> Result<String, io::Error> {
     let mut username_file = File::open("hello.txt")?;
     let mut username = String::new();
     username_file.read_to_string(&mut username)?;
@@ -315,7 +315,7 @@ impl From<io::Error> for OurError {
     }
 }
 
-fn _read_username_from_file2() -> Result<String, OurError> {
+fn _read_username_from_file3() -> Result<String, OurError> {
     let mut username = String::new();
 
     // Uso del operador ? para manejar errores y convertir de io::Error a OurError
@@ -409,7 +409,36 @@ fn _last_char_of_first_line2(text: &str) -> Option<char> {
     text.lines().next()?.chars().last()
 }
 
-pub fn main() {
+// Caso error en main, significa, retorna "unit" () o el error
+// Chatgpt:
+/* El tipo () se utiliza principalmente para representar la ausencia de valor o la falta de
+ * información. Es similar al concepto de void en algunos otros lenguajes de programación,
+ * pero a diferencia de void, que generalmente indica que una función no devuelve ningún
+ * valor, () no indica que no haya valor, sino que el único valor que tiene es la unidad
+ * misma.
+ *
+ * Por ejemplo, una función en Rust que no devuelve ningún valor (similar a una función de
+ * tipo void en otros lenguajes) tendría una firma de esta forma:
+ 
+    fn mi_funcion() -> () {
+        // Código de la función aquí
+    }
+
+ * O simplemente
+
+    fn mi_funcion() {
+        // Código de la función aquí
+    }
+ * En ambos casos, la función mi_funcion no devuelve nada útil en términos de valor, pero
+ * técnicamente devuelve una unidad (). Esto es útil para indicar que la función se ejecutó
+ * correctamente sin producir ningún resultado significativo.
+ * - Chatgpt 2024
+ * Lo otro que vamos a poner es un "trait" (se hablará a detalle más adelante) que significa
+ * cualquier error
+ */ 
+pub fn main() -> Result<(), Box<dyn Error>>{
+// En caso de manejar un Option
+//pub fn main() -> Option<()>{
     // _func_panic();
     // _func_panic2();
     // _crear_un_archivo();
@@ -419,9 +448,17 @@ pub fn main() {
     // _crear_un_archivo5();
     // _unwrap_or_else_prueba();
     // _read_username_from_file();
-    // read_username_from_file();
     // _read_username_from_file2();
+    // _read_username_from_file3();
     // _funcion();
     // _last_char_of_first_line("text").unwrap();
     // _last_char_of_first_line2("").unwrap();
+
+    //En caso de manejar un option
+    //"hola".lines().next()?;
+    //Some(())
+
+    //En caso de manejar un error
+    let _f = File::open("a.txt")?;
+    Ok(())
 }

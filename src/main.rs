@@ -28,5 +28,7 @@ fn main() {
     // collections::main();
     // Aquí iría la explicación detallada de las Strings
     // hashmaps::main();
-    control_de_errores::main();
+
+    // ignorar unit o error que devuelve con el _ xd
+    // let _ = control_de_errores::main();
 }
