@@ -11,6 +11,7 @@ mod ownership;
 mod structs;
 mod tipos_datos;
 mod control_de_errores;
+mod generics_y_traits;
 
 fn main() {
     //En este orden se fueron realizando los archivos y es orden
@@ -26,9 +27,13 @@ fn main() {
     // match_cf::main();
     // aquí va lo de modulos.rs
     // collections::main();
+
     // Aquí iría la explicación detallada de las Strings
+
     // hashmaps::main();
 
     // ignorar unit o error que devuelve con el _ xd
     // let _ = control_de_errores::main();
+
+    generics_y_traits::_main();
 }
