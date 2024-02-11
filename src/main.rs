@@ -11,7 +11,8 @@ mod ownership;
 mod structs;
 mod tipos_datos;
 mod control_de_errores;
-mod generics_y_traits;
+mod generics;
+mod traits;
 
 fn main() {
     //En este orden se fueron realizando los archivos y es orden
@@ -35,5 +36,7 @@ fn main() {
     // ignorar unit o error que devuelve con el _ xd
     // let _ = control_de_errores::main();
 
-    generics_y_traits::_main();
+    //generics::_main();
+    traits::_main();
+
 }
